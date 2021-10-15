@@ -1,0 +1,56 @@
+{
+	"Projects":	[
+		{
+			"name":	"msSubscriberInformation",
+			"node": "java-mvn-oc-node",
+			"technology": "Services",
+            "repositoryURL": "https://git.nh.inet/gitea/telco-micro-java/msSubscriberInformation.git",
+            "mainProjectPath": "",
+            "scriptBuildTest":[
+                "mvn -v",
+				"mvn clean",
+                "mvn install"
+            ],
+			"scriptBuildProd":[
+                "mvn install"
+            ],
+            "sonarEnvironment": "sonarqube-interno",
+            "scriptSonar": "mvn sonar:sonar -Dsonar.projectKey=msSubscriberInformation",
+            "scriptTestReportPath": "",
+            "unitTestProjectPath": "",
+			"scriptUnitTest":[
+				"mvn test"
+			],
+            "kiuwan": {
+				"lastDelivery": "",
+				"lastAnalysis": "",
+				"baseAnalysis": "",
+                "branch": ""
+			},
+            "nexus":{
+            	"instance":"",
+                "repository": "devops_releases",
+                "packageType": "app",
+                "packageExtension": "jar",
+            	"packagePath":"/target/",
+                "packageName": "msSubscriberInformation-0.0.1-SNAPSHOT"
+            },
+			"deployType": "OCP",
+            "deployWithDocker": true,
+			"deploy":{
+				"dev":{
+					"hasEnvironment": true,
+                    "namespace": "mi-movistar",
+                    "appName": "subscriber-information",
+                    "template": "deployment.yaml"
+				},
+				"prd":{
+					"hasEnvironment": true,
+                    "namespace": "mi-movistar",
+                    "appName": "subscriber-information",
+                    "template": "deployment.yaml"
+				}
+			}
+		}
+	]
+}
