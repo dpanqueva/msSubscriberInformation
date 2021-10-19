@@ -1,6 +1,5 @@
 package com.telefonica.mssubscriberinformation.model.dto;
 
-import com.telefonica.mssubscriberinformation.model.dto.ws.SubscriberProductItemDescDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

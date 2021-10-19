@@ -4,7 +4,7 @@ package com.telefonica.mssubscriberinformation.service;
 import com.telefonica.mssubscriberinformation.client.ConsumeFsGetSubscriberListClient;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemsDTO;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
-import com.telefonica.mssubscriberinformation.model.dto.ws.SubscriberProductItemDescDTO;
+import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemDescDTO;
 import com.telefonica.mssubscriberinformation.model.service.ISubscriberInformationService;
 import com.telefonica.mssubscriberinformation.model.service.SubscriberInformationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;

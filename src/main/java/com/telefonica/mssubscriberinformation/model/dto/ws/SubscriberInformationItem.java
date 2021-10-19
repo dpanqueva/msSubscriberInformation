@@ -5,13 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubscriberInformationItem {
+public class SubscriberInformationItem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String primaryTelephoneNumber;
     private String iDCustomer;

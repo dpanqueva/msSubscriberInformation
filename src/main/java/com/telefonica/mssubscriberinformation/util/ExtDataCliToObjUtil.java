@@ -4,7 +4,7 @@ import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemsDT
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.Response;
 import com.telefonica.mssubscriberinformation.model.dto.ws.RspBodyGSD1Item;
-import com.telefonica.mssubscriberinformation.model.dto.ws.SubscriberProductItemDescDTO;
+import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemDescDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.SuscriberGDLItemItem;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author dpanquev
  * @version 2021-10-14
- * */
+ */
 @Component
 public class ExtDataCliToObjUtil {
 
@@ -46,7 +46,7 @@ public class ExtDataCliToObjUtil {
             lstSubscriberProductItemDesc.add(subscriberProductItemDescDTO);
         });
         subscriberProductItemsDTO.setSubscriberProductItemDesc(lstSubscriberProductItemDesc);
-
+        subscriberWrapperDTO.setSubscriberProductItem(subscriberProductItemsDTO);
         return subscriberWrapperDTO;
     }
 
