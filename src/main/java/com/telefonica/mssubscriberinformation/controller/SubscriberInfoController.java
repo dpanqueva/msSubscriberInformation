@@ -29,9 +29,8 @@ public class SubscriberInfoController {
     @GetMapping(path = "/subscriberInfoByAccountId/{accountId}")
     public ResponseEntity<ResponseDTO<SubscriberWrapperDTO>> subscriberInfoByAccountId(@RequestHeader HttpHeaders headers, @PathVariable
             String accountId) {
-        log.info("se consumio correctamente");
+        log.info("se consumio correctamente" + accountId);
         headers = blindHeaders.headersInEvaluate(headers);
-
 
         return ResponseEntity.ok().headers(headers)
                 .body(new ResponseDTO<>(subscriberInformationService.consumeClient(accountId), EResponseType.SUCCESS
