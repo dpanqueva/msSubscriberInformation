@@ -40,6 +40,8 @@ public class ConsumeFsGetSubscriberListClient {
     @Autowired
     private ExtDataCliToObjUtil extDataCliToObjUtil;
 
+    /**Metodo para consumir getSubscriberList
+     * */
     public SubscriberWrapperDTO consumeSubscriberList(String accountId) {
         String url = urlFsGetSubscriberList;/**.concat("/").concat(accountId);*/
         var headers = new HttpHeaders();
