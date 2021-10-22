@@ -32,6 +32,7 @@ public class SubscriberInfoController {
     public ResponseEntity<ResponseDTO<SubscriberWrapperDTO>> subscriberInfoByAccountId(@RequestHeader HttpHeaders headers, @PathVariable
             String accountId) {
 
+
         logsUtils.printLogDic(accountId, "PathVariable");
         logsUtils.printLogDic(headers, "HeadersEntry");
 
@@ -44,6 +45,11 @@ public class SubscriberInfoController {
                 , "SUCCESS", "200");
 
         logsUtils.printLogDic(response, "response");
+
+
+        log.info("se consumio correctamente" + accountId);
+        headers = blindHeaders.headersInEvaluate(headers);
+
 
         return ResponseEntity.ok().headers(headers)
                 .body(response);

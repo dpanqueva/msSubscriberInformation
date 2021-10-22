@@ -1,22 +1,32 @@
 package com.telefonica.mssubscriberinformation.util;
 
+import com.telefonica.mssubscriberinformation.common.exception.InternalErrorException;
+import com.telefonica.mssubscriberinformation.common.exception.NotContentException;
+import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemDescDTO;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemsDTO;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.Response;
 import com.telefonica.mssubscriberinformation.model.dto.ws.RspBodyGSD1Item;
-import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemDescDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.SuscriberGDLItemItem;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author dpanquev
  * @version 2021-10-14
  */
+@Slf4j
 @Component
 public class ExtDataCliToObjUtil {
+
+
+    @Value("${values.for.match.type.plan}")
+    private String valueMatch;
 
     /**
      * Method for evaluate info from client fsGetSubscriberList for extract
@@ -81,6 +91,47 @@ public class ExtDataCliToObjUtil {
             default:
                 return "Not assign";
         }
+    }
+
+    /**
+     * Method for extract information about general plan
+     *
+     * @param spValues
+     * @param subscriberWrapperDTO
+     * @return
+     */
+    public SubscriberWrapperDTO extValuesSP(SubscriberWrapperDTO subscriberWrapperDTO, Map<String, Object> spValues) {
+        /** evaluate error SP*/
+        Integer codeError = (spValues.get("v_codigoError") != null) ? (Integer) spValues.get("v_codigoError") : 204;
+        if (codeError == 200) {
+            String planCode = (spValues.get("v_OfferingCode") != null) ? (String) spValues.get("v_OfferingCode") : "";
+            String planName = (spValues.get("v_OfferingName") != null) ? (String) spValues.get("v_OfferingName") : "";
+            subscriberWrapperDTO.getSubscriberProductItem().setPlanCode(planCode);
+            subscriberWrapperDTO.getSubscriberProductItem().setPlanName(planName);
+            subscriberWrapperDTO.getSubscriberProductItem().setPlanType(matchValueTypePlan(planName));
+        } else if (codeError == 204) {
+            throw new NotContentException("No data found for this search by ODS");
+        } else {
+            throw new InternalErrorException("Internal server error by ODS");
+        }
+        return subscriberWrapperDTO;
+    }
+
+    private String matchValueTypePlan(String typePlan) {
+        String nTypePlan = "";
+        if (!typePlan.equalsIgnoreCase("")) {
+            String[] splitValues = valueMatch.split(",");
+            for (String splitValue : splitValues) {
+                String[] splitMatchVal = splitValue.split(":");
+                if (typePlan.contains(splitMatchVal[0])) {
+                    nTypePlan = splitMatchVal[1];
+                    break;
+                }
+            }
+            log.info("verificando");
+        }
+        return nTypePlan;
+
     }
 
 }
