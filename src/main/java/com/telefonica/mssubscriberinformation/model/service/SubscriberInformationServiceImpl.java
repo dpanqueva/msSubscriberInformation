@@ -22,9 +22,9 @@ public class SubscriberInformationServiceImpl implements ISubscriberInformationS
     private ConsumeFsGetSubscriberListClient subscriberListClient;
 
     @Autowired
-
     private LogsUtils logsUtils;
 
+    @Autowired
     private ISubscriberInfoRepository subscriberInfoRepository;
 
     @Autowired
