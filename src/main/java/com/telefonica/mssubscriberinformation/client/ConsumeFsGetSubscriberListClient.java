@@ -1,6 +1,5 @@
 package com.telefonica.mssubscriberinformation.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.Response;
 import com.telefonica.mssubscriberinformation.util.ExtDataCliToObjUtil;
@@ -42,9 +41,14 @@ public class ConsumeFsGetSubscriberListClient {
     @Autowired
     private ExtDataCliToObjUtil extDataCliToObjUtil;
 
+
     @Autowired
     private LogsUtils logsUtils;
 
+
+    /**
+     * Metodo para consumir getSubscriberList
+     */
 
     public SubscriberWrapperDTO consumeSubscriberList(String accountId) {
 
