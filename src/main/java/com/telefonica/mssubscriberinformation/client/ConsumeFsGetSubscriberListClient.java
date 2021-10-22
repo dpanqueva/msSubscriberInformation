@@ -1,8 +1,10 @@
 package com.telefonica.mssubscriberinformation.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.Response;
 import com.telefonica.mssubscriberinformation.util.ExtDataCliToObjUtil;
+import com.telefonica.mssubscriberinformation.util.LogsUtils;
 import com.telefonica.mssubscriberinformation.util.ResponseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +42,34 @@ public class ConsumeFsGetSubscriberListClient {
     @Autowired
     private ExtDataCliToObjUtil extDataCliToObjUtil;
 
+    @Autowired
+    private LogsUtils logsUtils;
+
+
     public SubscriberWrapperDTO consumeSubscriberList(String accountId) {
+
+        logsUtils.printLogDic(accountId, "PathVariable");
+
         String url = urlFsGetSubscriberList;/**.concat("/").concat(accountId);*/
         var headers = new HttpHeaders();
         headers.set("originator", "app-detail-information-local");
         headers.set("execId", "s");
         headers.set("timestamp", new Timestamp(System.currentTimeMillis()).toString());
         var requestEntity = new HttpEntity<>(null, headers);
+
+        logsUtils.printLogDic(headers, "Headers");
+
         log.info(url + "/" + accountId);
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-
         ResponseEntity<Response> responseWS = restTemplate.exchange(url, HttpMethod.GET, requestEntity, new ParameterizedTypeReference<Response>() {
         });
-
         validator.validateStatus(String.valueOf(responseWS.getStatusCodeValue()));
         validator.validateBody(responseWS);
+        var response = responseWS.getBody();
 
-        return extDataCliToObjUtil.evaluateInfo(responseWS.getBody());
+        logsUtils.printLogDic(response, "response");
+
+        return extDataCliToObjUtil.evaluateInfo(response);
     }
 
 
