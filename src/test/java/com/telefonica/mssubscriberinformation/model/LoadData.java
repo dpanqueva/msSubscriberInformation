@@ -1,9 +1,14 @@
 package com.telefonica.mssubscriberinformation.model;
 
+import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemDescDTO;
+import com.telefonica.mssubscriberinformation.model.dto.SubscriberProductItemsDTO;
+import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LoadData {
 
@@ -82,4 +87,26 @@ public class LoadData {
         return new Response(rspBodyGSD1Item);
     }
 
+    public Map<String, Object> loadMockSP200(Integer error) {
+        Map<String, Object> mapSPInfo200 = new HashMap<>();
+        mapSPInfo200.put("v_codigoError", error);
+        mapSPInfo200.put("v_OfferingCode", "INTO v_OfferingCode");
+        mapSPInfo200.put("v_OfferingName", "Plan Voz Ilimitado Nacional 30 Min LDI para Duo");
+        return mapSPInfo200;
+    }
+
+    public SubscriberWrapperDTO loadDataSubscriber(){
+        SubscriberWrapperDTO subscriberWrapperDTO = new SubscriberWrapperDTO();
+        SubscriberProductItemsDTO subscriberProductItemsDTO = new SubscriberProductItemsDTO();
+        List<SubscriberProductItemDescDTO> subscriberProductItemDescDTOList = new ArrayList<>();
+        SubscriberProductItemDescDTO subscriberProductItemDescDTO = new SubscriberProductItemDescDTO();
+        subscriberProductItemsDTO.setActiveDate("2021-01-01");
+        subscriberProductItemsDTO.setPlanName("Trio Voz Ilimitada Nacional Internet 5Mbps TV Diamante_S384");
+        subscriberProductItemsDTO.setPlanCode("11798o");
+        subscriberProductItemsDTO.setSubscriberProductItemDesc(subscriberProductItemDescDTOList);
+
+        subscriberWrapperDTO.setSubscriberProductItem(subscriberProductItemsDTO);
+
+        return subscriberWrapperDTO;
+    }
 }

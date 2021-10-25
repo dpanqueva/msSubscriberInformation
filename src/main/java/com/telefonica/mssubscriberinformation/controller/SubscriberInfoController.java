@@ -39,7 +39,7 @@ public class SubscriberInfoController {
         log.info("se consumio correctamente");
         headers = blindHeaders.headersInEvaluate(headers);
         logsUtils.printLogDic(headers, "HeaderOut");
-        var response = new ResponseDTO<>(subscriberInformationService.consumeClient(accountId), EResponseType.SUCCESS
+        var response = new ResponseDTO<>(subscriberInformationService.obtainInformation(accountId), EResponseType.SUCCESS
                 , "SUCCESS", "200");
         logsUtils.printLogDic(response, "response");
         log.info("se consumio correctamente" + accountId);

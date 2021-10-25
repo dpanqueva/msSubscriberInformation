@@ -8,6 +8,6 @@ import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
  * */
 public interface ISubscriberInformationService {
 
-    public SubscriberWrapperDTO consumeClient(String accountId);
+    public SubscriberWrapperDTO obtainInformation(String accountId);
 
 }

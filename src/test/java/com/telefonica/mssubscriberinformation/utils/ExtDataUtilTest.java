@@ -1,10 +1,13 @@
 package com.telefonica.mssubscriberinformation.utils;
 
 
+import com.telefonica.mssubscriberinformation.common.exception.InternalErrorException;
+import com.telefonica.mssubscriberinformation.common.exception.NotContentException;
 import com.telefonica.mssubscriberinformation.model.LoadData;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
 import com.telefonica.mssubscriberinformation.model.dto.ws.Response;
 import com.telefonica.mssubscriberinformation.util.ExtDataCliToObjUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +15,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -35,6 +41,11 @@ class ExtDataUtilTest {
     private Response responseDTOWs9;
     private Response responseDTOWsE;
 
+    private Map<String, Object> objectMap200;
+    private Map<String, Object> objectMap500;
+    private Map<String, Object> objectMap204;
+    private SubscriberWrapperDTO subscriberWrapperDTO;
+
     @BeforeEach
     public void before() {
         LoadData loadData = new LoadData();
@@ -49,6 +60,11 @@ class ExtDataUtilTest {
         responseDTOWs8 = loadData.dataMatchValue2("8");
         responseDTOWs9 = loadData.dataMatchValue2("9");
         responseDTOWsE = loadData.dataMatchValue2("E");
+        objectMap200 = loadData.loadMockSP200(200);
+        objectMap500 = loadData.loadMockSP200(500);
+        objectMap204 = loadData.loadMockSP200(204);
+        ReflectionTestUtils.setField(extDataCliToObjUtil, "valueMatch", "Trio:Trio,Duo BA:DuoBa,Plan Banda Ancha:BA,TV:TV,Plan Voz:LB");
+        subscriberWrapperDTO = loadData.loadDataSubscriber();
     }
 
     @Test
@@ -115,6 +131,26 @@ class ExtDataUtilTest {
     void validateExtractInfoE() {
         SubscriberWrapperDTO responseDTO = extDataCliToObjUtil.evaluateInfo(responseDTOWsE);
         assertNotNull(responseDTO);
+    }
+
+    @Test
+    void extValuesSP200() {
+        SubscriberWrapperDTO responseDTO = extDataCliToObjUtil.extValuesSP(subscriberWrapperDTO, objectMap200);
+        assertNotNull(responseDTO);
+    }
+
+    @Test
+    void extValuesSP204() {
+        Assertions.assertThrows(NotContentException.class, () -> {
+            extDataCliToObjUtil.extValuesSP(subscriberWrapperDTO, objectMap204);
+        });
+    }
+
+    @Test
+    void extValuesSP500() {
+        Assertions.assertThrows(InternalErrorException.class, () -> {
+            extDataCliToObjUtil.extValuesSP(subscriberWrapperDTO, objectMap500);
+        });
     }
 
 }

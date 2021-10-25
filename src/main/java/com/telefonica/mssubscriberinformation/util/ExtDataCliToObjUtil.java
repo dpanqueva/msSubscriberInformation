@@ -95,7 +95,7 @@ public class ExtDataCliToObjUtil {
 
     /**
      * Method for extract information about general plan
-     *
+     * from stored procedure information arrived
      * @param spValues
      * @param subscriberWrapperDTO
      * @return
@@ -117,6 +117,16 @@ public class ExtDataCliToObjUtil {
         return subscriberWrapperDTO;
     }
 
+    /**
+     * Method for compare content about type plan
+     * if contains trio then trio
+     * if contains Duo BA then DuoBa
+     * if contains Plan Banda Ancha then BA
+     * if contains TV then TV
+     * if contains Plan Voz then LB
+     * @param typePlan
+     * @return
+     * */
     private String matchValueTypePlan(String typePlan) {
         String nTypePlan = "";
         if (!typePlan.equalsIgnoreCase("")) {

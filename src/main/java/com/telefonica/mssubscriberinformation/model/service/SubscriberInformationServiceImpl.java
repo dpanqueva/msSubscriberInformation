@@ -38,11 +38,18 @@ public class SubscriberInformationServiceImpl implements ISubscriberInformationS
      * @return
      */
     @Override
-    public SubscriberWrapperDTO consumeClient(String accountId) {
-        SubscriberWrapperDTO subscriberWrapperDTO = subscriberListClient.consumeSubscriberList(accountId);
-        Map<String, Object> spValues = subscriberInfoRepository.consumeSP(accountId, 0, 1);
-        subscriberWrapperDTO = extDataCliToObjUtil.extValuesSP(subscriberWrapperDTO, spValues);
-        return subscriberWrapperDTO;
+    public SubscriberWrapperDTO obtainInformation(String accountId) {
+
+        return consumeSPHomePlan(consumeClientSubscriberList(accountId), accountId);
+    }
+
+    private SubscriberWrapperDTO consumeClientSubscriberList(String accountId) {
+        return subscriberListClient.consumeSubscriberList(accountId);
+    }
+
+    private SubscriberWrapperDTO consumeSPHomePlan(SubscriberWrapperDTO subscriberWrapperDTO, String accountId) {
+        return extDataCliToObjUtil.extValuesSP(subscriberWrapperDTO
+                , subscriberInfoRepository.consumeSP(accountId, 0612334421, 2));
     }
 
 }
