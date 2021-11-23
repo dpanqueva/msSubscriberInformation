@@ -3,6 +3,7 @@ package com.telefonica.mssubscriberinformation.model.service;
 import com.telefonica.mssubscriberinformation.client.ConsumeFsGetSubscriberListClient;
 import com.telefonica.mssubscriberinformation.model.dto.SubscriberWrapperDTO;
 import com.telefonica.mssubscriberinformation.model.repository.ISubscriberInfoRepository;
+import com.telefonica.mssubscriberinformation.model.repository.TestRepository;
 import com.telefonica.mssubscriberinformation.util.ExtDataCliToObjUtil;
 import com.telefonica.mssubscriberinformation.util.LogsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class SubscriberInformationServiceImpl implements ISubscriberInformationS
     @Autowired
     private ExtDataCliToObjUtil extDataCliToObjUtil;
 
+    @Autowired
+    private TestRepository testRepository;
+
 
     /**
      * Method for consume client webservice
@@ -39,7 +43,7 @@ public class SubscriberInformationServiceImpl implements ISubscriberInformationS
      */
     @Override
     public SubscriberWrapperDTO obtainInformation(String accountId) {
-
+        test();
         return consumeSPHomePlan(consumeClientSubscriberList(accountId), accountId);
     }
 
@@ -50,6 +54,10 @@ public class SubscriberInformationServiceImpl implements ISubscriberInformationS
     private SubscriberWrapperDTO consumeSPHomePlan(SubscriberWrapperDTO subscriberWrapperDTO, String accountId) {
         return extDataCliToObjUtil.extValuesSP(subscriberWrapperDTO
                 , subscriberInfoRepository.consumeSP(accountId, 0612334421, 2));
+    }
+
+    private void test(){
+        testRepository.testSP();
     }
 
 }

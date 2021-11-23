@@ -16,4 +16,7 @@ public interface ISubscriberInfoRepository extends JpaRepository<SubscriberInfoE
     public Map<String, Object> consumeSP(@Param("P_NUMERO_CUENTA") String pNumeroCuenta,
                                          @Param("P_NUMERO_TELEFONO") Integer pNumeroTelefono,
                                          @Param("P_METODO_BUSQUEDA") Integer pMetodoBusqueda);
+
+    @Procedure(name = "SP_TEST_PK")
+    public Map<String, Object> cursor();
 }
